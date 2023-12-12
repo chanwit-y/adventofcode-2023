@@ -1,3 +1,9 @@
+use day::one::DayOne;
+
+mod util;
+mod day;
+
 fn main() {
-    println!("Hello, world!");
+    // DayOne::run();
+    DayOne::run2();
 }
