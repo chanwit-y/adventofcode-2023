@@ -3,10 +3,10 @@ use crate::util;
 pub struct DayOne;
 
 impl DayOne {
-    fn s2e(input: &str) -> char {
-        let mut res: char = '-';
-        for c in input.chars() {
-            if c.is_digit(10) {
+    pub fn s2e(input: &str) -> (usize, char) {
+        let mut res: (usize, char) = (0, '-');
+        for c in input.chars().enumerate() {
+            if c.1.is_digit(10) {
                 res = c;
                 break;
             }
@@ -14,45 +14,15 @@ impl DayOne {
         res
     }
 
-    fn e2s(input: &str) -> char {
-        let mut res: char = '-';
-        for c in input.chars().rev() {
-            if c.is_digit(10) {
+    fn e2s(input: &str) -> (usize, char) {
+        let mut res: (usize, char) = (0, '-');
+        for c in input.chars().rev().enumerate() {
+            if c.1.is_digit(10) {
                 res = c;
                 break;
             }
         }
         res
-    }
-
-    fn index_s2e(input: &str) -> usize {
-        let mut res: usize = 0;
-        for (i, c) in input.chars().enumerate() {
-            if c.is_digit(10) {
-                res = i;
-                break;
-            }
-        }
-        res
-    }
-
-    fn index_e2s(input: &str) -> usize {
-        let mut res: usize = 0;
-        for (i, c) in input.chars().rev().enumerate() {
-            if c.is_digit(10) {
-                res = i;
-                break;
-            }
-        }
-        res
-    }
-
-    fn start_num(text: &str, end: usize) -> String {
-	text[0..end].to_string()
-    }
-
-    fn end_num(text: &str, start: usize) -> String {
-	text[start..].to_string()
     }
 
     pub fn run() {
@@ -64,8 +34,8 @@ impl DayOne {
             let mut digit = String::from("");
 
             // TODO: check char is not digit
-            digit.push(DayOne::s2e(v));
-            digit.push(DayOne::e2s(v));
+            digit.push(DayOne::s2e(v).1);
+            digit.push(DayOne::e2s(v).1);
 
             let digit = digit.parse::<i32>().unwrap();
 
@@ -74,14 +44,23 @@ impl DayOne {
 
         println!("{}", sum);
     }
+}
 
-    pub fn run2() {
-        let input = util::file::Input::new("data/day1-2.txt");
-        let vec = input.to_vec();
+#[cfg(test)]
+mod tests {
+    //     use super::*;
 
-	let d1 = DayOne::start_num(vec[0], DayOne::index_s2e(vec[0]));
+    //     #[test]
+    //     fn test_find_txt_num() {
+    //         let input = "tlnllks2jcfdlgsjbhpfnineone";
+    //         let res = DayOne::find_txt_num(input.to_string(), false);
+    //         assert_eq!(res, (20, "nine"));
+    //     }
 
-	println!("{}", d1);
-	
-    }
+    //     #[test]
+    //     fn test_find_txt_num_revert() {
+    //         let input = "tlnllks2jcfdlgsjbhpfnineone";
+    //         let res = DayOne::find_txt_num(input.to_string(), true);
+    //         assert_eq!(res, (24, "one"));
+    //     }
 }
